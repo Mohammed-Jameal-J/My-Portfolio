@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio - MohdJameal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              darkTheme: '#11001F'
+            }
+          }
+        }
+      }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Ovo&display=swap" rel="stylesheet">
+    <style>
+      @keyframes mj_slow {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      .animate-mj_slow {
+        animation: mj_slow 10s linear infinite;
+      }
+      .font-Outfit { font-family: 'Outfit', sans-serif; }
+      .font-Ovo { font-family: 'Ovo', serif; }
+      .mjHover { background-color: #fcf4ff; }
+      .jmHover { background-color: rgba(184, 32, 230, 0.1); }
+      .grid-cols-auto {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      }
+      
+      /* Hero banner styles */
+      .hero-section {
+        position: relative;
+        background-image: url('./images/herobanner.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+      
+      .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.7);
+        z-index: 0;
+      }
+      
+      .dark .hero-section::before {
+        background: rgba(17, 0, 31, 0.7);
+      }
+      
+      .hero-content {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Timeline animation styles */
+      .timeline-segment {
+        transition: background 0.3s ease;
+      }
+      
+      .timeline-segment.active {
+        background: linear-gradient(to bottom, #1e3a8a, #3b82f6) !important;
+        box-shadow: 0 0 10px #3b82f6, 0 0 20px #3b82f6;
+      }
+
+      /* Timeline dot glow animation */
+      .timeline-dot {
+        transition: all 0.3s ease;
+      }
+
+      .timeline-dot.glow {
+        box-shadow: 0 0 15px currentColor, 0 0 30px currentColor, 0 0 45px currentColor;
+        animation: pulse-glow 2s ease-in-out infinite;
+      }
+
+      @keyframes pulse-glow {
+        0%, 100% {
+          box-shadow: 0 0 15px currentColor, 0 0 30px currentColor, 0 0 45px currentColor;
+        }
+        50% {
+          box-shadow: 0 0 20px currentColor, 0 0 40px currentColor, 0 0 60px currentColor;
+        }
+      }
+    </style>
+  </head>
+  <body class="overflow-x-hidden font-Outfit leading-8 dark:bg-darkTheme dark:text-white">
+    <div class="fixed top-0 right-0 w-11/12 -z-10 translate-y-[-80%] dark:hidden">
+      <img src="./images/header-bg-color.png" alt="" class="w-full" />
+    </div>
+    <nav
+      class="w-full fixed px-5 lg:px-8 xl:px-[8%] py-4 flex items-center justify-between z-50 bg-white/80 dark:bg-darkTheme/80 backdrop-blur-sm"
+    >
+      <img
+        src="./images/logo.jameal-removebg-preview.png"
+        alt="Logo"
+        class="w-28 cursor-pointer mr-14 dark:hidden"
+      />
+      <img
+        src="./images/logo.jameal.white-removebg-preview.png"
+        alt="Logo"
+        class="w-28 cursor-pointer mr-14 hidden dark:block"
+      />
+      <ul
+        class="hidden md:flex items-center gap-6 lg:gap-8 rounded-full px-12 py-3 bg-white shadow-sm bg-opacity-50 font-Ovo dark:border dark:border-white/50 dark:bg-transparent"
+      >
+         <li><a href="#top" onclick="closeMenu()">Home</a></li>
+        <li><a href="#about" onclick="closeMenu()">About me</a></li>
+        <li><a href="#experience" onclick="closeMenu()">Experience</a></li>
+        <li><a href="#services" onclick="closeMenu()">Services</a></li>
+        <li><a href="#work" onclick="closeMenu()">My work</a></li>
+        <!-- <li><a href="#contact" onclick="closeMenu()">Contact me</a></li> -->
+      </ul>
+
+      <div class="flex items-center gap-4">
+        <button onclick="toggleTheme()">
+          <img src="./images/moon_icon.png" alt="" class="w-6 dark:hidden ">
+          <img src="./images/sun_icon.png" alt="" class="w-6 hidden dark:block">
+        </button>
+        <a
+          href="#contact"
+          class="hidden lg:flex items-center gap-3 px-10 py-2.5 border border-gray-500 rounded-full ml-4 font-Ovo dark:border-white/50"
+          >Contact 
+          <img src="./images/arrow-icon.png" alt="" class="w-3 dark:hidden">
+          <img src="./images/arrow-icon-dark.png" alt="" class="w-3 hidden dark:block">
+        </a>
+
+        <button class="block md:hidden ml-3" onclick="openMenu()">
+          <img src="./images/menu-black.png" alt="" class="w-6 dark:hidden">
+          <img src="./images/menu-white.png" alt="" class="w-6 hidden dark:block">
+        </button>
+      </div>
+      <!-- mobile menu -->
+      <ul
+        id="sideMenu"
+        class="flex md:hidden flex-col gap-4 py-20 px-10 fixed -right-64 top-0 bottom-0 w-64 z-50 h-screen bg-rose-50 transition duration-500 font-Ovo dark:bg-jmHover dark:text-white"
+      >
+        <div class="absolute right-6 top-6  " onclick="closeMenu()">
+          <img
+            src="./images/close-black.png"
+            alt=""
+            class="w-5 cursor-pointer dark:hidden"
+          />
+          <img
+            src="./images/close-white.png"
+            alt=""
+            class="w-5 cursor-pointer hidden dark:block"
+          />
+        </div>
+        <li><a href="#top" onclick="closeMenu()">Home</a></li>
+        <li><a href="#about" onclick="closeMenu()">About me</a></li>
+        <li><a href="#experience" onclick="closeMenu()">Experience</a></li>
+        <li><a href="#services" onclick="closeMenu()">Services</a></li>
+        <li><a href="#work" onclick="closeMenu()">My work</a></li>
+        <li><a href="#contact" onclick="closeMenu()">Contact me</a></li>
+      </ul>
+    </nav>
+
+    <!-- header with hero banner -->
+    <div class="hero-section w-full min-h-screen flex items-center justify-center pt-24 pb-10">
+      <div class="hero-content w-11/12 max-w-3xl text-center mx-auto flex flex-col items-center justify-center gap-4 px-4">
+        <img src="./images/logo.jameal.jpg" alt="" class="rounded-full w-32" />
+        <h3 class="flex items-end gap-2 text-xl md:text-2xl mb-3 font-Ovo">
+          Hi! I'm Mohammed Jameal
+          <img src="./images/hand-icon.png" alt="" class="w-6" />
+        </h3>
+        <h1 class="text-3xl sm:text-5xl lg:text-[66px] font-Ovo">
+            a passionate  <span id="element"></span> 
+        </h1>
+        <p class="max-w-2xl mx-auto font-Ovo">
+           From Coimbatore, Tamil Nadu. I specialize in crafting modern, high-performance digital experiences using JavaScript, React, Python, SQL, and Django, along with no-code/low-code platforms like WordPress, Wix, and Framer. I blend clean design with seamless functionality to build fast, scalable websites that deliver real business impact.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 items-center gap-4 mt-4 w-full max-w-md">
+          <a
+            href="#contact"
+            class="px-10 py-3 border rounded-full bg-gradient-to-r from-[#b820e6] to-[#da7d20] text-white flex items-center justify-center gap-2 dark:border-transparent w-full"
+            >Contact Me
+            <img src="./images/right-arrow-white.png" alt="" class="w-4"
+          /></a>
+          <a
+            href="https://drive.google.com/file/d/1OLJ0h6UbL1zH9Bao52-THCBLNSPimDBx/view?usp=sharing"
+            download
+            class="px-10 py-3 border rounded-full border-gray-500 flex items-center justify-center gap-2 bg-white dark:text-black w-full"
+            >My Resume <img src="./images/download-icon.png" alt="" class="w-4"
+          /></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- about me  -->
+    <div id="about" class="w-full px-[12%] py-10 scroll-mt-20">
+      <h4 class="text-center mb-2 text-lg font-Ovo">Introduction</h4>
+      <h2 class="text-center text-5xl font-Ovo">About Me</h2>
+      <div class="flex w-full flex-col lg:flex-row items-center gap-20 my-20">
+        <div class="max-w-max mx-auto relative">
+          <img
+            src="./images/jameal.workk.jpg"
+            alt=""
+            class="w-64 sm:w-80 rounded-3xl max-w-none"
+          />
+
+          <div
+            class="bg-white w-1/2 aspect-square absolute right-0 bottom-0 rounded-full translate-x-1/4 translate-y-1/3 shadow-[0_4px_55px_rgba(149,0,162,0.15)] flex items-center justify-center"
+          >
+            <img src="./images/circular-text.png" alt="" class="w-full animate-mj_slow" />
+            <img
+              src="./images/man-with-laptop.png"
+              alt=""
+              class="w-1/2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+            />
+          </div>
+        </div>
+        <div class="flex-1">
+          <p class="mb-10 max-w-2xl font-Ovo">
+          I'm a Web Developer with hands-on experience across multiple companies, skilled in building clean, responsive, and high-quality web interfaces, while also leading teams and effectively collaborating with clients. With solid real-world exposure through internships and full-time roles, I've worked closely with cross-functional teams to develop scalable products, maintain strong code standards, and deliver seamless, engaging user experiences, continually advancing my expertise with modern tools and technologies.
+          </p>
+          <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-full">
+            <li
+              class="border-[0.5px] border-gray-400 rounded-xl p-6 cursor-pointer hover:bg-mjHover hover:-translate-y-1 duration-500 hover:shadow-black dark:border-white dark:hover:shadow-white dark:hover:bg-jmHover/50">
+              <img src="./images/code-icon.png" alt="" class="w-7 mt-3 dark:hidden">
+              <img src="./images/code-icon-dark.png" alt="" class="w-7 mt-3 hidden dark:block">
+              <h3 class="my-4 font-semibold text-gray-700 dark:text-white">Languages</h3>
+              <p class="text-gray-600 text-sm dark:text-white/80">
+                HTML,CSS,JavaScript,<br>React, Python,SQL & Django
+              </p>
+            </li>
+            <li
+  class="border-[0.5px] border-gray-400 rounded-xl p-6 cursor-pointer hover:bg-mjHover hover:-translate-y-1 duration-500 hover:shadow-black dark:border-white dark:hover:shadow-white dark:hover:bg-jmHover/50"
+>
+  <img src="./images/nocode-icon.png" alt="" class="w-7 mt-3 dark:hidden">
+  <img src="./images/nocode-icon-dark.png" alt="" class="w-7 mt-3 hidden dark:block">
+
+  <h3 class="my-4 font-semibold text-gray-700 dark:text-white">No-Code Tools</h3>
+  <p class="text-gray-600 text-sm dark:text-white/80">
+    WordPress, Wix, <br> Framer
+  </p>
+</li>
+
+            <li
+              class="border-[0.5px] border-gray-400 rounded-xl p-6 cursor-pointer hover:bg-mjHover hover:-translate-y-1 duration-500 hover:shadow-black dark:border-white dark:hover:shadow-white dark:hover:bg-jmHover/50"
+            >
+              <img src="./images/edu-icon.png" alt="" class="w-7 mt-3 dark:hidden">
+              <img src="./images/edu-icon-dark.png" alt="" class="w-7 mt-3 hidden dark:block">
+              
+              <h3 class="my-4 font-semibold text-gray-700  dark:text-white">Education</h3>
+              <p class="text-gray-600 text-sm dark:text-white/80">B.E in computer Science <br> Passout -2023</p>
+            </li>
+            <li
+              class="border-[0.5px] border-gray-400 rounded-xl p-6 cursor-pointer hover:bg-mjHover hover:-translate-y-1 duration-500 hover:shadow-black dark:border-white dark:hover:shadow-white dark:hover:bg-jmHover/50"
+            >
+              <img src="./images/project-icon.png" alt="" class="w-7 mt-3 dark:hidden">
+              <img src="./images/project-icon-dark.png" alt="" class="w-7 mt-3 hidden dark:block">
+              <h3 class="my-4 font-semibold text-gray-700 dark:text-white">Projects</h3>
+              <p class="text-gray-600 text-sm dark:text-white/80">Built more than 5+ projects</p>
+            </li>
+          </ul>
+          <h4 class="my-6 text-gray-700 font-Ovo dark:text-white/80">Tools i use</h4>
+
+          <ul class="flex items-center gap-3 sm:gap-5">
+            <li
+              class="flex items-center justify-center w-12 sm:w-14 aspect-square border border-gray-400 rounded-lg cursor-pointer hover:-translate-y-1 duration-500"
+            >
+              <img src="./images/vscode.png" alt="" class="w-5 sm:w-7" />
+            </li>
+            <li
+              class="flex items-center justify-center w-12 sm:w-14 aspect-square border border-gray-400 rounded-lg cursor-pointer hover:-translate-y-1 duration-500"
+            >
+              <img src="./images/firebase.png" alt="" class="w-5 sm:w-7" />
+            </li>
+            <li
+              class="flex items-center justify-center w-12 sm:w-14 aspect-square border border-gray-400 rounded-lg cursor-pointer hover:-translate-y-1 duration-500"
+            >
+              <img src="./images/alightmotion.png" alt="" class="w-5 sm:w-7" />
+            </li>
+            <li
+              class="flex items-center justify-center w-12 sm:w-14 aspect-square border border-gray-400 rounded-lg cursor-pointer hover:-translate-y-1 duration-500"
+            >
+              <img src="./images/figma.png" alt="" class="w-5 sm:w-7" />
+            </li>
+            <li
+              class="flex items-center justify-center w-12 sm:w-14 aspect-square border border-gray-400 rounded-lg cursor-pointer hover:-translate-y-1 duration-500"
+            >
+              <img src="./images/git.png" alt="" class="w-5 sm:w-7" />
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+     <!-- Experience Section -->
+    <div id="experience" class="w-full px-[12%] py-10 scroll-mt-20 bg-gradient-to-b from-transparent to-purple-50/20 dark:to-transparent">
+      <h4 class="text-center mb-2 text-lg font-Ovo">My Journey</h4>
+      <h2 class="text-center text-5xl font-Ovo mb-16">Work Experience</h2>
+      
+      <div class="max-w-4xl mx-auto relative">
+        <!-- Timeline Line with segments -->
+        <div class="absolute left-1/2 transform -translate-x-1/2 w-1 h-full hidden md:block">
+          <div id="timeline-segment-1" class="timeline-segment w-full h-1/3 bg-gradient-to-b from-purple-500 to-orange-500"></div>
+          <div id="timeline-segment-2" class="timeline-segment w-full h-1/3 bg-gradient-to-b from-purple-500 to-orange-500"></div>
+          <div id="timeline-segment-3" class="timeline-segment w-full h-1/3 bg-gradient-to-b from-purple-500 to-orange-500"></div>
+        </div>
+        <div class="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 w-0.5 h-full bg-gradient-to-b from-purple-500 to-orange-500 md:hidden"></div>
+
+        <!-- Experience Items -->
+        <div class="space-y-12">
+          <!-- Experience 1 - Current -->
+          <div class="relative experience-item opacity-0" data-timeline="1">
+            <div class="md:flex md:items-center">
+              <div class="md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0">
+                <div class="md:hidden mb-4 pl-16">
+                  <span class="inline-block bg-green-500 text-white text-xs px-3 py-1 rounded-full font-semibold">Current</span>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-2 pl-16 md:pl-0">Web Developer</h3>
+                <p class="text-purple-600 dark:text-purple-400 font-semibold mb-2 pl-16 md:pl-0">ATX Soft, Austin, Texas</p>
+                <p class="text-gray-600 dark:text-gray-400 text-sm pl-16 md:pl-0">July 2025 - Present • 5 months</p>
+              </div>
+              <div class="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 w-4 h-4 bg-green-500 rounded-full border-4 border-white dark:border-darkTheme timeline-dot" id="dot-1"></div>
+              <div class="md:w-1/2 md:pl-12">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg border-l-4 border-green-500 ml-16 md:ml-0 hover:shadow-xl transition-shadow duration-300">
+                  <div class="hidden md:block mb-4">
+                    <span class="inline-block bg-green-500 text-white text-xs px-3 py-1 rounded-full font-semibold">Current</span>
+                  </div>
+                  <ul class="text-gray-700 dark:text-gray-300 text-sm space-y-2">
+                    <li class="flex items-start gap-2">
+                      <span class="text-purple-500 mt-1">▹</span>
+                      <span>Developing mobile and web applications using React and React Native</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span class="text-purple-500 mt-1">▹</span>
+                      <span>Building cross-platform solutions for iOS and Android</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span class="text-purple-500 mt-1">▹</span>
+                      <span>Implementing responsive designs and optimizing performance</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span class="text-purple-500 mt-1">▹</span>
+                      <span>Collaborating with design and backend teams</span>
+                    </li>
+                  </ul>
+                  <div class="mt-4 flex flex-wrap gap-2">
+                    <span class="bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 text-xs px-3 py-1 rounded-full">React</span>
+                    <span class="bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 text-xs px-3 py-1 rounded-full">JavaScript</span>
+                    <span class="bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 text-xs px-3 py-1 rounded-full">Custom Plugins</span>
+                    <span class="bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 text-xs px-3 py-1 rounded-full">Hostinger</span>
+                    <span class="bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 text-xs px-3 py-1 rounded-full">Python</span>
+                                        <span class="bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 text-xs px-3 py-1 rounded-full">React Native</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Experience 2 -->
+          <div class="relative experience-item opacity-0" data-timeline="2">
+            <div class="md:flex md:items-center md:flex-row-reverse">
+              <div class="md:w-1/2 md:pl-12 mb-4 md:mb-0">
+                <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-2 pl-16 md:pl-0">Frontend React Developer</h3>
+                <p class="text-purple-600 dark:text-purple-400 font-semibold mb-2 pl-16 md:pl-0">Rough Note, Malaysia</p>
+                <p class="text-gray-600 dark:text-gray-400 text-sm pl-16 md:pl-0">August 2024 - September 2025 • 1 year</p>
+              </div>
+              <div class="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 w-4 h-4 bg-purple-600 rounded-full border-4 border-white dark:border-darkTheme timeline-dot" id="dot-2"></div>
+              <div class="md:w-1/2 md:pr-12">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg border-l-4 border-purple-600 ml-16 md:ml-0 hover:shadow-xl transition-shadow duration-300">
+                  <ul class="text-gray-700 dark:text-gray-300 text-sm space-y-2">
+                    <li class="flex items-start gap-2">
+                      <span class="text-purple-500 mt-1">▹</span>
+                      <span>Built dynamic and responsive web applications using React.js</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span class="text-purple-500 mt-1">▹</span>
+                      <span>Collaborated with backend teams to integrate RESTful APIs</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span class="text-purple-500 mt-1">▹</span>
+                      <span>Optimized application performance and user experience</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span class="text-purple-500 mt-1">▹</span>
+                      <span>Implemented state management using Redux and Context API</span>
+                    </li>
+                  </ul>
+                  <div class="mt-4 flex flex-wrap gap-2">
+                    <span class="bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 text-xs px-3 py-1 rounded-full">React.js</span>
+                    <span class="bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 text-xs px-3 py-1 rounded-full">JavaScript</span>
+                    <span class="bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 text-xs px-3 py-1 rounded-full">Redux</span>
+                    <span class="bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 text-xs px-3 py-1 rounded-full">REST APIs</span>
+                    <span class="bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 text-xs px-3 py-1 rounded-full">Hostinger</span>
+                    <span class="bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 text-xs px-3 py-1 rounded-full">Bit Bucket</span>
+                    <span class="bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 text-xs px-3 py-1 rounded-full">Jira</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Experience 3 -->
+          <div class="relative experience-item opacity-0" data-timeline="3">
+            <div class="md:flex md:items-center">
+              <div class="md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0">
+                <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-2 pl-16 md:pl-0">Frontend Developer Intern</h3>
+                <p class="text-purple-600 dark:text-purple-400 font-semibold mb-2 pl-16 md:pl-0">Salesqueen Software Solution, Chennai</p>
+                <p class="text-gray-600 dark:text-gray-400 text-sm pl-16 md:pl-0">September 2024 - March 2025 • 6 months</p>
+              </div>
+              <div class="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 w-4 h-4 bg-orange-500 rounded-full border-4 border-white dark:border-darkTheme timeline-dot" id="dot-3"></div>
+              <div class="md:w-1/2 md:pl-12">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg border-l-4 border-orange-500 ml-16 md:ml-0 hover:shadow-xl transition-shadow duration-300">
+                  <ul class="text-gray-700 dark:text-gray-300 text-sm space-y-2">
+                    <li class="flex items-start gap-2">
+                      <span class="text-purple-500 mt-1">▹</span>
+                      <span>Developed responsive web interfaces using HTML, CSS, and JavaScript</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span class="text-purple-500 mt-1">▹</span>
+                      <span>Assisted in creating reusable UI components</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span class="text-purple-500 mt-1">▹</span>
+                      <span>Participated in code reviews and learned best practices</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span class="text-purple-500 mt-1">▹</span>
+                      <span>Worked with version control systems (Git)</span>
+                    </li>
+                  </ul>
+                  <div class="mt-4 flex flex-wrap gap-2">
+                    <span class="bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300 text-xs px-3 py-1 rounded-full">HTML/CSS</span>
+                    <span class="bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300 text-xs px-3 py-1 rounded-full">JavaScript</span>
+                                        <span class="bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300 text-xs px-3 py-1 rounded-full">Git</span>  
+                    <span class="bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300 text-xs px-3 py-1 rounded-full">Responsive Design</span>
+                    <span class="bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300 text-xs px-3 py-1 rounded-full">Wordpress</span>
+                    <span class="bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300 text-xs px-3 py-1 rounded-full">FTP</span>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- services  -->
+    <div id="services" class="w-full px-[12%] py-10 scroll-mt-20">
+      <h4 class="text-center mb-2 text-lg font-Ovo">What i offer</h4>
+      <h2 class="text-center text-5xl font-Ovo">My services</h2>
+      <p class="text-center max-w-2xl mx-auto mt-5 mb-12 font-Ovo">
+        A creative and driven recent graduate with a background in frontend
+        development. Proficient in translating design mockups into fully
+        functional web applications. Strong problem-solving abilities and a
+        collaborative mindset, with a dedication to learning new technologies
+        and improving my craft. Ready to bring fresh ideas and enthusiasm to a
+        forward-thinking company.
+      </p>
+
+      <div class="grid grid-cols-auto gap-6 my-10">
+        <div
+          class="border border-gray-400 rounded-lg px-8 py-12 hover:shadow-black cursor-pointer hover:bg-mjHover hover:-translate-y-1 duration-500 dark:hover:bg-jmHover dark:hover:shadow-white"
+        >
+          <img src="./images/web-icon.png" alt="" class="w-10" />
+          <h3 class="text-lg my-4 text-gray-700 dark:text-white">Web Design</h3>
+          <p class="text-sm text-gray-600 leading-5 dark:text-white/80">
+            Crafting modern, responsive, and visually stunning websites that deliver exceptional user experiences across all devices.
+          </p>
+          <a href="" class="flex items-center gap-2 text-sm mt-5"
+            >On Update<img src="./images/right-arrow.png" alt="" class="w-4"
+          /></a>
+        </div>
+        <div
+          class="border border-gray-400 rounded-lg px-8 py-12 hover:shadow-black cursor-pointer hover:bg-mjHover hover:-translate-y-1 duration-500 dark:hover:bg-jmHover dark:hover:shadow-white"
+        >
+          <img src="./images/mobile-icon.png" alt="" class="w-10" />
+          <h3 class="text-lg my-4 text-gray-700 dark:text-white">Wordpress Web</h3>
+          <p class="text-sm text-gray-600 leading-5 dark:text-white/80">
+              Creating Some unique and Dynamic  websites using Wordpress
+          </p>
+          <a href="" class="flex items-center gap-2 text-sm mt-5"
+            >On Update<img src="./images/right-arrow.png" alt="" class="w-4"
+          /></a>
+        </div>
+        <div
+          class="border border-gray-400 rounded-lg px-8 py-12 hover:shadow-black cursor-pointer hover:bg-mjHover hover:-translate-y-1 duration-500 dark:hover:bg-jmHover dark:hover:shadow-white"
+        >
+          <img src="./images/ui-icon.png" alt="" class="w-10" />
+          <h3 class="text-lg my-4 text-gray-700 dark:text-white">UI/UX design</h3>
+          <p class="text-sm text-gray-600 leading-5 dark:text-white/80">
+            I'm currently expanding my skill set by studying UI/UX design 
+          </p>
+          <a href="" class="flex items-center gap-2 text-sm mt-5"
+            >On Update<img src="./images/right-arrow.png" alt="" class="w-4"
+          /></a>
+        </div>
+        <div
+          class="border border-gray-400 rounded-lg px-8 py-12 hover:shadow-black cursor-pointer hover:bg-mjHover hover:-translate-y-1 duration-500 dark:hover:bg-jmHover dark:hover:shadow-white"
+        >
+          <img src="./images/graphics-icon.png" alt="" class="w-10" />
+          <h3 class="text-lg my-4 text-gray-700 dark:text-white">Graphics design</h3>
+          <p class="text-sm text-gray-600 leading-5 dark:text-white/80">
+            I'm also proficient in editing, which allows me to refine visual elements to create polished, user-friendly applications.
+          </p>
+          <a href="" class="flex items-center gap-2 text-sm mt-5"
+            >On Update<img src="./images/right-arrow.png" alt="" class="w-4"
+          /></a>
+        </div>
+      </div>
+    </div>
+    <!-- my work  -->
+    <div id="work" class="w-full px-[12%] py-10 scroll-mt-20">
+      <h4 class="text-center mb-2 text-lg font-Ovo">My portfolio</h4>
+      <h2 class="text-center text-5xl font-Ovo ">My latest work</h2>
+      <p class="text-center max-w-2xl mx-auto mt-5 mb-12 font-Ovo">
+        Welcome to my web development portfolio Explore a collection of projects
+        showcasing my expertise in front-end development.
+      </p>
+      <div class="grid grid-cols-auto my-10 gap-5 dark:text-black">
+        <div
+          class="aspect-square bg-[url('./images/PR.png')] bg-no-repeat bg-cover bg-center rounded-lg relative cursor-pointer group"
+        >
+          <div
+            class="bg-white w-10/12 rounded-md absolute bottom-5 left-1/2 -translate-x-1/2 py-3 px-5 flex items-center justify-between duration-500 group-hover:bottom-7"
+          >
+            <div>
+              <h2 class="font-semibold">Pumi Roots</h2>
+              <p class="text-sm text-gray-700">Web Design</p>
+            </div>
+            <div
+              class="border rounded-full border-black w-9 aspect-square flex items-center justify-center shadow-[2px_2px_0_#000] group-hover:bg-lime-300 transition"
+            >
+            <a href="https://pumiroots.com/" target="blank">
+              <img src="./images/send-icon.png" alt="" class="w-5" />
+            </a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="aspect-square bg-[url('./images/RN.png')] bg-no-repeat bg-cover bg-center rounded-lg relative cursor-pointer group"
+        >
+          <div
+            class="bg-white w-10/12 rounded-md absolute bottom-5 left-1/2 -translate-x-1/2 py-3 px-5 flex items-center justify-between duration-500 group-hover:bottom-7"
+          >
+            <div>
+              <h2 class="font-semibold">Rough Note</h2>
+              <p class="text-sm text-gray-700">Web Design</p>
+            </div>
+            <div
+              class="border rounded-full border-black w-9 aspect-square flex items-center justify-center shadow-[2px_2px_0_#000] group-hover:bg-lime-300 transition"
+            >
+            <a href="https://roughnote.org/" target="blank">
+              <img src="./images/send-icon.png" alt="" class="w-5" />
+            </a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="aspect-square bg-[url('./images/task3.png')] bg-no-repeat bg-cover bg-center rounded-lg relative cursor-pointer group"
+        >
+          <div
+            class="bg-white w-10/12 rounded-md absolute bottom-5 left-1/2 -translate-x-1/2 py-3 px-5 flex items-center justify-between duration-500 group-hover:bottom-7"
+          >
+            <div>
+              <h2 class="font-semibold">Old Shop Web</h2>
+              <p class="text-sm text-gray-700">Web Design</p>
+            </div>
+            <div
+              class="border rounded-full border-black w-9 aspect-square flex items-center justify-center shadow-[2px_2px_0_#000] group-hover:bg-lime-300 transition"
+            >
+            <a href="https://mohammedjameal.github.io/old-jhop/" target="blank">
+              <img src="./images/send-icon.png" alt="" class="w-5" />
+            </a>   
+            </div>
+          </div>
+        </div>
+        <div
+          class="aspect-square bg-[url('./images/VOM.png')] bg-no-repeat bg-cover bg-center rounded-lg relative cursor-pointer group"
+        >
+          <div
+            class="bg-white w-10/12 rounded-md absolute bottom-5 left-1/2 -translate-x-1/2 py-3 px-5 flex items-center justify-between duration-500 group-hover:bottom-7"
+          >
+            <div>
+              <h2 class="font-semibold">Victory Of The Mind</h2>
+              <p class="text-sm text-gray-700">Web Design</p>
+            </div>
+            <div
+              class="border rounded-full border-black w-9 aspect-square flex items-center justify-center shadow-[2px_2px_0_#000] group-hover:bg-lime-300 transition"
+            >
+            <a href="https://victoryofthemind.in/" target="blank">
+              <img src="./images/send-icon.png" alt="" class="w-5" />
+            </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a
+        href="#"
+        class="w-max flex items-center justify-center gap-2 text-gray-700 border-[0.5px] border-gray-700 rounded-full py-3 px-10 mx-auto my-20 hover:bg-mjHover duration-500 dark:text-white dark:border-white dark:hover:bg-jmHover"
+        >Show more 
+        <img src="./images/right-arrow-bold.png" alt="" class="w-4 dark:hidden"/>
+        <img src="./images/right-arrow-bold-dark.png" alt="" class="w-4 hidden dark:block"/>
+      </a>
+    </div>
+
+
+    <!-- contact  -->
+     <div id="contact" class="w-full px-[12%] py-10 scroll-mt-20 bg-[url('./images/footer-bg-color.png')] bg-no-repeat bg-[length:90%_auto] bg-center dark:bg-none">
+        <h4 class="text-center mb-2 text-lg font-Ovo">Connect with me</h4>
+        <h2 class="text-center text-5xl font-Ovo">Get in touch</h2>
+        <p class="text-center max-w-2xl mx-auto mt-5 mb-12 font-Ovo">
+        I'd love to hear from you! If you have any questions, comments or feedback, please use the form below
+        </p>
+        <form method="POST" action="https://api.web3forms.com/submit" class="max-w-2xl mx-auto">
+          <input type="hidden" name="access_key" value="8d69d07d-1548-4b69-80d1-62834a97944a">
+            <div class="grid grid-cols-auto gap-6 mt-10 mb-8">
+                <input type="text" placeholder="Enter your name" class="flex-1 p-3 outline-none border-[0.5px] border-gray-400 rounded-md bg-white dark:bg-jmHover/30 dark:border-white/90" required name="name">
+                <input type="email" placeholder="Enter your email" class="flex-1 p-3 outline-none border-[0.5px] border-gray-400 rounded-md bg-white dark:bg-jmHover/30 dark:border-white/90" required name="email">
+            </div>
+            <textarea rows="6" placeholder="Enter your message" class="w-full p-4 outline-none border-[0.5px] border-gray-400 rounded-md bg-white mb-6 dark:bg-jmHover/30 dark:border-white/90" required name="message"></textarea>
+            <button class="py-3 px-8 w-max flex items-center justify-between gap-2 bg-black/80 text-white rounded-full mx-auto hover:bg-black duration-500  dark:bg-transparent dark:border-[0.5px] dark:hover:bg-jmHover">Submit now <img src="./images/right-arrow-white.png" alt="" class="w-4"></button>
+        </form>
+     </div>
+
+     <!-- footer  -->
+
+     <div class="mt-20">
+        <div class="text-center">
+            <img src="./images/logo.jameal-removebg-preview.png" alt="" class="w-40 mx-auto mb-2 dark:hidden">
+            <img src="./images/logo.jameal.white-removebg-preview.png" alt="" class="w-40 mx-auto mb-2 hidden dark:block">
+            <div class="w-max flex items-center gap-2 mx-auto">
+                <img src="./images/mail_icon.png" alt="" class="w-6 dark:hidden">
+                <img src="./images/mail_icon_dark.png" alt="" class="w-6 hidden dark:block">
+                mohammedjameal031@gmail.com
+            </div>
+        </div>
+        <div class="text-center sm:flex items-center justify-between border-t border-gray-400 mx-[10%] mt-12 py-6">
+            <p> &#169; 2024 Mohd Jameal, All rights reserved</p>
+            <ul class="flex items-center gap-10 justify-center mt-4 sm:mt-0">
+                <li><a href="https://www.linkedin.com/in/mohammed-jameal-j/" target="_blank">LinkedIn</a></li>
+                <li><a href="https://github.com/MohammedJameal" target="_blank">Github</a></li>
+            </ul>
+        </div>
+     </div>
+    <script src="./script.js"></script>
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <script>
+      var typed = new Typed('#element', {
+        strings: ['"Python Full Stack Developer."', '"Frontend React Developer."', '"No-Code Developer."', '"Capcut Editor."'],
+        typeSpeed: 150,
+        loop:true
+      });
+
+      // Intersection Observer for experience timeline animations
+      const observerOptions = {
+        threshold: 0.2,
+        rootMargin: '0px 0px -100px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => {
+              entry.target.style.opacity = '1';
+              
+              // Activate timeline segment and dot when experience item is visible
+              const timelineNum = entry.target.getAttribute('data-timeline');
+              if (timelineNum) {
+                const segment = document.getElementById(`timeline-segment-${timelineNum}`);
+                const dot = document.getElementById(`dot-${timelineNum}`);
+                if (segment) {
+                  segment.classList.add('active');
+                }
+                if (dot) {
+                  dot.classList.add('glow');
+                }
+              }
+            }, index * 200);
+          } else {
+            // Remove active class when scrolling away
+            const timelineNum = entry.target.getAttribute('data-timeline');
+            if (timelineNum) {
+              const segment = document.getElementById(`timeline-segment-${timelineNum}`);
+              const dot = document.getElementById(`dot-${timelineNum}`);
+              if (segment) {
+                segment.classList.remove('active');
+              }
+              if (dot) {
+                dot.classList.remove('glow');
+              }
+            }
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.experience-item').forEach((item) => {
+        observer.observe(item);
+      });
+    </script>
+  </body>
+</html>
