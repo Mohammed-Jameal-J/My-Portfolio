@@ -36,3 +36,19 @@ if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.match
         localStorage.theme = 'light';
     }      
   }
+
+  function calculateMonths(start) {
+    const startDate = new Date(start);
+    const now = new Date();
+    
+    let months =
+      (now.getFullYear() - startDate.getFullYear()) * 12 +
+      (now.getMonth() - startDate.getMonth());
+
+    if (months < 0) months = 0;
+    return months;
+  }
+
+  const atxMonths = calculateMonths("2025-07-01");
+  document.getElementById("atx-duration").textContent =
+    `July 2025 - Present • ${atxMonths} month${atxMonths !== 1 ? 's' : ''}`;
